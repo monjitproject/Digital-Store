@@ -43,6 +43,21 @@ export const api = {
     }>;
   },
 
+  async ownerLogin(params: { password?: string; email?: string }) {
+    const res = await fetch('/api/auth/owner-login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(params),
+    });
+    return res.json() as Promise<{
+      success: boolean;
+      user?: User;
+      token?: string;
+      isOwner?: boolean;
+      message?: string;
+    }>;
+  },
+
   async getMe() {
     const res = await fetch('/api/auth/me', {
       headers: getAuthHeaders(),

@@ -272,14 +272,56 @@ app.post('/api/auth/google/login', (req, res) => {
     return;
   }
 
-  const user = dbStore.getOrCreateUser(email, name, avatar);
+  const cleanEmail = email.trim().toLowerCase();
+  const isOwnerUser = dbStore.isOwner(cleanEmail);
+  const user = dbStore.getOrCreateUser(cleanEmail, name, avatar);
+  user.role = isOwnerUser ? 'admin' : 'customer';
   const token = Buffer.from(`${user.email}:${Date.now()}`).toString('base64');
 
   res.json({
     success: true,
     user,
     token,
-    isOwner: user.role === 'admin',
+    isOwner: isOwnerUser,
+  });
+});
+
+// 4.1 Owner Password Authentication (Strict Server-Side Secret Verification)
+app.post('/api/auth/owner-login', (req, res) => {
+  const { password, email } = req.body;
+  const ownerEmail = dbStore.getOwnerEmail();
+  const configuredPassword = process.env.OWNER_PASSWORD;
+
+  // If email is supplied, ensure it matches the configured owner email
+  if (email && email.trim().toLowerCase() !== ownerEmail) {
+    res.status(403).json({
+      success: false,
+      message: 'Access Denied — Owner Only. Provided email does not match authorized owner.',
+    });
+    return;
+  }
+
+  // If OWNER_PASSWORD secret is configured on the server, check it
+  if (configuredPassword && configuredPassword.trim()) {
+    if (!password || password.trim() !== configuredPassword.trim()) {
+      res.status(401).json({
+        success: false,
+        message: 'Invalid owner secret password. Access denied.',
+      });
+      return;
+    }
+  }
+
+  const user = dbStore.getOrCreateUser(ownerEmail, 'Store Owner');
+  user.role = 'admin';
+  const token = Buffer.from(`${user.email}:${Date.now()}`).toString('base64');
+
+  res.json({
+    success: true,
+    user,
+    token,
+    isOwner: true,
+    message: 'Authenticated as Store Owner',
   });
 });
 

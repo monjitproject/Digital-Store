@@ -12,6 +12,7 @@ interface AuthContextType {
   cartCount: number;
   myOrders: Order[];
   loginWithGoogle: (email: string, name?: string, avatar?: string) => Promise<boolean>;
+  loginAsOwner: (password?: string, email?: string) => Promise<{ success: boolean; message?: string }>;
   openGoogleOAuth: () => Promise<void>;
   logout: () => void;
   addToCart: (itemId: string) => Promise<boolean>;
@@ -127,6 +128,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  const loginAsOwner = async (password?: string, email?: string): Promise<{ success: boolean; message?: string }> => {
+    try {
+      const res = await api.ownerLogin({ password, email });
+      if (res.success && res.user && res.token) {
+        localStorage.setItem('digivault_auth_token', res.token);
+        localStorage.setItem('digivault_user_email', res.user.email);
+        setUser(res.user);
+        setIsOwner(true);
+        await refreshUserData();
+        return { success: true, message: res.message };
+      }
+      return { success: false, message: res.message || 'Owner authentication failed' };
+    } catch (err: any) {
+      return { success: false, message: err.message || 'Network error during owner login' };
+    }
+  };
+
   const openGoogleOAuth = async () => {
     try {
       const res = await api.getGoogleAuthUrl();
@@ -193,6 +211,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         cartCount: cart.length,
         myOrders,
         loginWithGoogle,
+        loginAsOwner,
         openGoogleOAuth,
         logout,
         addToCart,
