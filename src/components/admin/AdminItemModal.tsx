@@ -404,6 +404,7 @@ export const AdminItemModal: React.FC<AdminItemModalProps> = ({
         <AnimatePresence>
           {hasDraftNotice && (
             <motion.div
+              key="draft-notice"
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion } from 'motion/react';
 import { Item, CustomerReview } from '../types';
 import { useAuth } from '../context/AuthContext';
 import { api } from '../services/api';
@@ -64,14 +64,12 @@ export const ItemDetailModal: React.FC<ItemDetailModalProps> = ({ item, onClose,
   };
 
   return (
-    <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md overflow-y-auto">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95, y: 15 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.95, y: 15 }}
-          className="relative w-full max-w-4xl max-h-[90vh] flex flex-col my-auto rounded-3xl bg-slate-900 border border-slate-700/80 text-slate-100 shadow-2xl overflow-hidden"
-        >
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md overflow-y-auto">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95, y: 15 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        className="relative w-full max-w-4xl max-h-[90vh] flex flex-col my-auto rounded-3xl bg-slate-900 border border-slate-700/80 text-slate-100 shadow-2xl overflow-hidden"
+      >
           {/* Header */}
           <div className="p-5 border-b border-slate-800 flex items-center justify-between gap-4 bg-slate-900/95 sticky top-0 z-20">
             <div className="flex items-center gap-2.5 min-w-0">
@@ -354,6 +352,5 @@ export const ItemDetailModal: React.FC<ItemDetailModalProps> = ({ item, onClose,
           </div>
         </motion.div>
       </div>
-    </AnimatePresence>
   );
 };
