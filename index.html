@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DigiVault - Digital Products Marketplace</title>
+    <script>
+      (function() {
+        try {
+          var originalFetch = window.fetch;
+          if (originalFetch) {
+            var boundFetch = function(input, init) {
+              return originalFetch.call(window, input, init);
+            };
+            var currentFetch = boundFetch;
+            Object.defineProperty(window, 'fetch', {
+              get: function() {
+                return currentFetch;
+              },
+              set: function(fn) {
+                currentFetch = fn;
+              },
+              configurable: true,
+              enumerable: true
+            });
+          }
+        } catch (e) {
+          try {
+            var orig = Window.prototype.fetch;
+            var cur = orig || window.fetch;
+            Object.defineProperty(Window.prototype, 'fetch', {
+              get: function() {
+                return cur;
+              },
+              set: function(fn) {
+                cur = fn;
+              },
+              configurable: true,
+              enumerable: true
+            });
+          } catch (e2) {}
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+

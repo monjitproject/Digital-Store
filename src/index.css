@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+@layer utilities {
+  @keyframes float-slow {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-18px) rotate(6deg); }
+  }
+  @keyframes pulse-glow {
+    0%, 100% { opacity: 0.4; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(1.08); }
+  }
+  .animate-float-slow {
+    animation: float-slow 7s ease-in-out infinite;
+  }
+  .animate-pulse-glow {
+    animation: pulse-glow 4s ease-in-out infinite;
+  }
+}
+
+/* Light Yellow & Light Green Theme Defaults */
+body {
+  background-color: #FEFDF0;
+  color: #1a2e1a;
+  overflow-x: hidden;
+}
+
+.dark body {
+  background-color: #0b140e;
+  color: #f1f8f3;
+}
+

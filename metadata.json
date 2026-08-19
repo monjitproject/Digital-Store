@@ -1,0 +1,6 @@
+{
+  "name": "DigiVault - Digital Store",
+  "description": "Full-stack digital store for products, video/PDF courses, and website themes with secure payment gateway integration, admin management, and instant downloads.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

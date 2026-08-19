@@ -1,0 +1,55 @@
+{
+  "items": [],
+  "orders": [],
+  "coupons": [
+    {
+      "id": "coup_1",
+      "code": "WELCOME10",
+      "type": "percent",
+      "discountValue": 10,
+      "minOrderAmount": 500,
+      "expiryDate": "2027-12-31",
+      "usedCount": 0,
+      "maxUses": 1000,
+      "isActive": true
+    },
+    {
+      "id": "coup_2",
+      "code": "LAUNCH500",
+      "type": "flat",
+      "discountValue": 500,
+      "minOrderAmount": 2000,
+      "expiryDate": "2027-12-31",
+      "usedCount": 0,
+      "maxUses": 500,
+      "isActive": true
+    },
+    {
+      "id": "coup_3",
+      "code": "DIGI20",
+      "type": "percent",
+      "discountValue": 20,
+      "minOrderAmount": 1000,
+      "expiryDate": "2027-12-31",
+      "usedCount": 0,
+      "maxUses": 200,
+      "isActive": true
+    }
+  ],
+  "users": [
+    {
+      "id": "usr_1787134483585_r0cj",
+      "name": "Store Owner",
+      "email": "vmanjeet773@gmail.com",
+      "role": "admin",
+      "avatar": "https://api.dicebear.com/7.x/bottts/svg?seed=vmanjeet773%40gmail.com",
+      "createdAt": "2026-08-19T10:14:43.585Z",
+      "ordersCount": 0,
+      "totalSpent": 0,
+      "downloadsCount": 0
+    }
+  ],
+  "carts": {},
+  "reviews": [],
+  "downloadTokens": {}
+}
